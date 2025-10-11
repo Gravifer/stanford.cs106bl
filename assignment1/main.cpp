@@ -58,8 +58,39 @@ struct Course {
  * @param filename The name of the file to parse.
  * @param courses  A vector of courses to populate.
  */
-void parse_csv(std::string& filename, std::vector<Course>& courses) {
-  /* (STUDENT TODO) Your code goes here... */
+void parse_csv(std::string filename, std::vector<Course>& courses) {
+  std::ifstream file(filename);
+  if (!file.is_open()) {
+    std::cerr << "Error: Could not open file " << filename << std::endl;
+    return;
+  }
+  
+  std::string line;
+  if (!std::getline(file, line)) {
+    std::cerr << "Error: Could not read header line from " << filename << std::endl;
+    return;
+  }
+
+  while (std::getline(file, line)) {
+    if (line.empty()) continue;  // Skip empty lines
+    
+    std::vector<std::string> fields = split(line, ',');
+    if (fields.size() != 3) {
+      std::cerr << "Warning: Skipping malformed line with " << fields.size() 
+                << " fields: " << line << std::endl;
+      continue;
+    }
+    
+    try {
+      int units = std::stoi(fields[1]);
+      Course course{fields[0], units, fields[2]};
+      courses.push_back(course);
+    } catch (const std::exception& e) {
+      std::cerr << "Warning: Could not parse units in line: " << line << std::endl;
+    }
+  }
+  
+  // File automatically closes when ifstream goes out of scope
 }
 
 /**
@@ -109,7 +140,7 @@ int main() {
   parse_csv("courses.csv", courses);
 
   /* Uncomment for debugging... */
-  // print_courses(courses);
+  print_courses(courses);
 
   write_courses_offered(courses);
   write_courses_not_offered(courses);
