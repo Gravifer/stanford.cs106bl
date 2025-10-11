@@ -26,7 +26,7 @@ const std::string COURSES_NOT_OFFERED_PATH = "student_output/courses_not_offered
  */
 struct Course {
   std::string title;
-  int number_of_units;
+  std::string number_of_units;
   std::string quarter;
 };
 
@@ -82,8 +82,8 @@ void parse_csv(const std::string& filename, std::vector<Course>& courses) {
     }
     
     try {
-      const int units = std::stoi(fields[1]);
-      courses.emplace_back(Course{fields[0], units, fields[2]});
+      // const int units = std::stoi(fields[1]);
+      courses.push_back(Course{fields[0], fields[1], fields[2]});
     } catch (const std::exception& e) {
       std::cerr << "Warning: Could not parse units in line: " << line << std::endl;
     }
@@ -167,12 +167,13 @@ void write_courses_not_offered(const std::vector<Course>& unlisted_courses) {
   
   file << "Title,Number of Units,Quarter\n";
   
-  for (const auto& course : unlisted_courses) {
+  for (const Course& course : unlisted_courses) {
     file << course.title << "," << course.number_of_units << "," << course.quarter << "\n";
   }
   
   if (!file.good()) {
     std::cerr << "Error: Failed to write to " << COURSES_NOT_OFFERED_PATH << std::endl;
+    return;
   }
 }
 
