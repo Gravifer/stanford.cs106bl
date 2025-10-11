@@ -58,7 +58,7 @@ struct Course {
  * @param filename The name of the file to parse.
  * @param courses  A vector of courses to populate.
  */
-void parse_csv(std::string filename, std::vector<Course>& courses) {
+void parse_csv(const std::string& filename, std::vector<Course>& courses) {
   std::ifstream file(filename);
   if (!file.is_open()) {
     std::cerr << "Error: Could not open file " << filename << std::endl;
@@ -72,9 +72,9 @@ void parse_csv(std::string filename, std::vector<Course>& courses) {
   }
 
   while (std::getline(file, line)) {
-    if (line.empty()) continue;  // Skip empty lines
+    if (line.empty()) continue;
     
-    std::vector<std::string> fields = split(line, ',');
+    const std::vector<std::string> fields = split(line, ',');
     if (fields.size() != 3) {
       std::cerr << "Warning: Skipping malformed line with " << fields.size() 
                 << " fields: " << line << std::endl;
@@ -82,15 +82,12 @@ void parse_csv(std::string filename, std::vector<Course>& courses) {
     }
     
     try {
-      int units = std::stoi(fields[1]);
-      Course course{fields[0], units, fields[2]};
-      courses.push_back(course);
+      const int units = std::stoi(fields[1]);
+      courses.emplace_back(Course{fields[0], units, fields[2]});
     } catch (const std::exception& e) {
       std::cerr << "Warning: Could not parse units in line: " << line << std::endl;
     }
   }
-  
-  // File automatically closes when ifstream goes out of scope
 }
 
 /**
@@ -112,7 +109,40 @@ void parse_csv(std::string filename, std::vector<Course>& courses) {
  *                    This vector will be modified by removing all offered courses.
  */
 void write_courses_offered(std::vector<Course>& all_courses) {
-  /* (STUDENT TODO) Your code goes here... */
+  std::ofstream file(COURSES_OFFERED_PATH);
+  if (!file.is_open()) {
+    std::cerr << "Error: Could not open file " << COURSES_OFFERED_PATH << std::endl;
+    return;
+  }
+  
+  file << "Title,Number of Units,Quarter\n";
+  
+  // Write offered courses and mark them for removal
+  auto is_offered =
+    [](const Course &course) { return course.quarter != "null"; };
+  // // std::vector<Course> courses_offered; // expensive to construct
+  for (const Course& course : all_courses) {
+    if (is_offered(course)) {
+      file << course.title << "," << course.number_of_units << "," << course.quarter << "\n";
+      // // courses_offered.push_back(course);
+    }
+  }
+  
+  if (!file.good()) {
+    std::cerr << "Error: Failed to write to " << COURSES_OFFERED_PATH << std::endl;
+    return;
+  }
+  
+  // for (const Course& course : courses_offered) {
+  //   delete_elem_from_vector(all_courses, course);
+  // }
+  // Remove offered courses using erase-remove idiom for better performance
+  all_courses.erase(
+    std::remove_if(all_courses.begin(), all_courses.end(),
+      is_offered
+    ),
+    all_courses.end()
+  );
 }
 
 /**
@@ -128,8 +158,22 @@ void write_courses_offered(std::vector<Course>& all_courses) {
  *
  * @param unlisted_courses A vector of courses that are not offered.
  */
-void write_courses_not_offered(std::vector<Course>& unlisted_courses) {
-  /* (STUDENT TODO) Your code goes here... */
+void write_courses_not_offered(const std::vector<Course>& unlisted_courses) {
+  std::ofstream file(COURSES_NOT_OFFERED_PATH);
+  if (!file.is_open()) {
+    std::cerr << "Error: Could not open file " << COURSES_NOT_OFFERED_PATH << std::endl;
+    return;
+  }
+  
+  file << "Title,Number of Units,Quarter\n";
+  
+  for (const auto& course : unlisted_courses) {
+    file << course.title << "," << course.number_of_units << "," << course.quarter << "\n";
+  }
+  
+  if (!file.good()) {
+    std::cerr << "Error: Failed to write to " << COURSES_NOT_OFFERED_PATH << std::endl;
+  }
 }
 
 int main() {
