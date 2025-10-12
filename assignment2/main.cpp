@@ -14,7 +14,7 @@
 #include <string>
 #include <unordered_set>
 
-std::string kYourName = "STUDENT TODO"; // Don't forget to change this!
+std::string kYourName = "Guest"; // Don't forget to change this!
 
 /**
  * Takes in a file name and returns a set containing all of the applicant names as a set.
@@ -28,7 +28,23 @@ std::string kYourName = "STUDENT TODO"; // Don't forget to change this!
  * to also change the corresponding functions in `utils.h`.
  */
 std::set<std::string> get_applicants(std::string filename) {
-  // STUDENT TODO: Implement this function.
+  std::ifstream file(filename);
+  if (!file.is_open()) {
+    std::cerr << "Error: Could not open file " << filename << '\n';
+    std::exit(1);
+  }
+  std::set<std::string> applicants;
+  std::string applicantName;
+  while (std::getline(file, applicantName)) {
+    if (applicantName.empty()) {
+      continue;
+    }
+    auto [_, success] = applicants.insert(applicantName);
+    if (!success) {
+      std::cerr << "Warning: Duplicate applicant name found: " << applicantName << '\n';
+    }
+  }
+  return applicants;
 }
 
 /**

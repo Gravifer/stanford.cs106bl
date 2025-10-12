@@ -226,9 +226,14 @@
 			}
 		],
 		"files.readonlyInclude": {
-			"courses.csv": true
+			"courses.csv": true,
+			"short_answer.txt": true
 		},
 		"read-only.non-workspaceFiles.enable": true,
-		"read-only.non-workspaceFiles.statusBarButton": true
+		"read-only.non-workspaceFiles.statusBarButton": true,
+		"c-cpp-flylint.standard": [
+			"c23",
+			"c++23"
+		]
 	}
 }
