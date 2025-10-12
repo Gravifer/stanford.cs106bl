@@ -14,7 +14,7 @@
 #include <string>
 #include <unordered_set>
 
-std::string kYourName = "Guest"; // Don't forget to change this!
+std::string kYourName = "Jane Doe"; // Don't forget to change this!
 
 /**
  * Takes in a file name and returns a set containing all of the applicant names as a set.
@@ -57,6 +57,44 @@ std::set<std::string> get_applicants(std::string filename) {
  */
 std::queue<const std::string*> find_matches(std::string name, std::set<std::string>& students) {
   // STUDENT TODO: Implement this function.
+  if (name.empty()) {
+    std::cerr << "Error: Target name provided to `find_matches` is empty.\n";
+    std::exit(1); // return {};
+  }
+  if (students.empty()) {
+    std::cerr << "Warning: Student set provided to `find_matches` is empty.\n";
+    return {};
+  }
+  auto initials_of = [](const std::string& name) {
+    std::string initials;
+    bool start_of_word = true;
+    for (char ch : name) {
+      if (std::isalpha(ch)) {
+        if (start_of_word) {
+          initials += ch;
+          start_of_word = false;
+        }
+      } else if (std::isspace(ch)) {
+        start_of_word = true;
+      }
+    }
+    return initials;
+  };
+  auto target_initials = initials_of(name);
+  auto is_match = [&](const std::string& student) {
+    if (student.empty()) {
+      return false;
+    }
+    auto student_initials = initials_of(student);
+    return student_initials == target_initials;
+  };
+  std::queue<const std::string*> matches;
+  for (const auto& student : students) {
+    if (is_match(student)) {
+      matches.push(&student);
+    }
+  }
+  return matches;
 }
 
 /**
