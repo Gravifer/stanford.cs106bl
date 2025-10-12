@@ -185,7 +185,7 @@ int main() {
   parse_csv("courses.csv", courses);
 
   /* Uncomment for debugging... */
-  print_courses(courses);
+  // print_courses(courses);
 
   write_courses_offered(courses);
   write_courses_not_offered(courses);

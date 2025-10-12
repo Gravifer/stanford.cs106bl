@@ -1,18 +1,18 @@
 # Assignment 1: SimpleEnroll
 
-Due Friday, April 25th, at 11:59PM
+Due Friday, October 17th, at 11:59PM
 
 ## Overview
 
-It’s that time of the quarter again; time to use SimpleEnroll 🤗 Wootwoot.
+It's that time of the quarter again; time to use SimpleEnroll 🤗 Wootwoot.
 One thing everyone realizes in their Stanford career at one point is that they
 have to eventually graduate — and so enrolling in classes becomes a strategic
 endeavor to maximize the XP towards graduation, while also being able to sleep
 more than 4 hours a night!
 
-In this hopefully short assignment, we’re going to use data from the
+In this hopefully short assignment, we're going to use data from the
 ExploreCourses API to figure out which CS classes on ExploreCourses are
-offered this year, and which are not! We’ll be taking advantage of streams, while also exercising initialization and references in C++. Lets jump in ʕ•́ᴥ•̀ʔっ
+offered this year, and which are not! We'll be taking advantage of streams, while also exercising initialization and references in C++. Lets jump in ʕ*́ᴥ*̀ʔっ
 
 There are only two files you should need to care about:
 
@@ -69,7 +69,7 @@ stream 😏?
 
 1. Take a look at the `split` function we provide in `utils.cpp`. It may come in handy!
     * Feel free to check out the implementation of `split` and ask us any questions about it – you
-should be able to reason about it since it’s using a `stringstream`.
+should be able to reason about it since it's using a `stringstream`.
 2. Each **line** is a record! *This is important, so we're saying it again :>)*
 3. In CSV files (and specifically in `courses.csv`), the first line is usually a row that defines the column names (a column header row). This line doesn't actually correspond to a `Course`, so you'll need to skip it somehow!
 
@@ -77,8 +77,8 @@ should be able to reason about it since it’s using a `stringstream`.
 
 Ok. Now you have a populated `courses` vector which has all of the records
 of the `courses.csv` file neatly stored in a `Course` struct! You find yourself
-interested in only the courses that are offered, right? **A course is considered offered if its Quarter field is not the string `“null”`.** In this function, write out to `“student_output/courses_offered.csv”` all the courses that don’t have
-`“null”` in the quarter field.
+interested in only the courses that are offered, right? **A course is considered offered if its Quarter field is not the string `"null"`.** In this function, write out to `"student_output/courses_offered.csv"` all the courses that don't have
+`"null"` in the quarter field.
 
 > [!IMPORTANT]  
 > When writing out to the CSV file, please follow this format:
@@ -97,9 +97,9 @@ One way to do this is to keep track of the courses that are offered perhaps with
 
 ## Part 3: `write_courses_not_offered`
 
-So you’re curious about courses that aren’t offered... In the
+So you're curious about courses that aren't offered... In the
 `write_courses_not_offered` function, write out to
-`“student_output/courses_not_offered.csv”` the courses in
+`"student_output/courses_not_offered.csv"` the courses in
 `unlisted_courses`. Remember since you deleted the courses that are
 offered in the previous step, `unlisted_courses` trivially contains ONLY courses that are not offered – lucky you. So this step should look really similar to Part 2 except shorter and a *tiny* bit simpler.
 
@@ -109,7 +109,11 @@ After compiling and running, if your autograder looks like this:
 
 ![An image showing a terminal window where the autograder has run with all tests passing](docs/autograder.png)
 
-then you have finished the assignment! Woot woot. To submit the assignment, please complete the feedback form [at this link](https://forms.gle/9CBz5HRYRADP3RW28). Once you submit the form, a link to the submission page will show up in the form submission confirmation.
+then you have finished the assignment! Woot woot. 
+
+To submit the assignment:
+1. Please complete the feedback form [at this link](https://forms.gle/UeD6zjmUpFbhGgw98). 
+2. Submit your assignment on [Paperless](https://cs198.stanford.edu/paperless/CS/106L#assignments)!
 
 Your deliverable should be:
 
