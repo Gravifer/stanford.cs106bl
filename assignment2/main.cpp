@@ -56,7 +56,6 @@ std::set<std::string> get_applicants(std::string filename) {
  * @return          A queue containing pointers to each matching name.
  */
 std::queue<const std::string*> find_matches(std::string name, std::set<std::string>& students) {
-  // STUDENT TODO: Implement this function.
   if (name.empty()) {
     std::cerr << "Error: Target name provided to `find_matches` is empty.\n";
     std::exit(1); // return {};
@@ -108,7 +107,42 @@ std::queue<const std::string*> find_matches(std::string name, std::set<std::stri
  *                Will return "NO MATCHES FOUND." if `matches` is empty.
  */
 std::string get_match(std::queue<const std::string*>& matches) {
-  // STUDENT TODO: Implement this function.
+  if (matches.empty()) {
+    return "NO MATCHES FOUND.";
+  }
+  const std::string* best_match = matches.front();
+  matches.pop();
+  
+  auto is_better_match = [](const std::string& candidate, const std::string& current_best) {
+    auto count_vowels = [](const std::string& str) {
+      int count = 0;
+      for (char ch : str) {
+        ch = std::tolower(ch);
+        if (ch == 'a' || ch == 'e' || ch == 'i' || ch == 'o' || ch == 'u') {
+          count++;
+        }
+      }
+      return count;
+    };
+    int candidate_vowels = count_vowels(candidate);
+    int current_best_vowels = count_vowels(current_best);
+    if (candidate_vowels > current_best_vowels) {
+      return true;
+    } else if (candidate_vowels == current_best_vowels) {
+      return candidate < current_best; // Lexicographically smaller
+    }
+    return false;
+  };
+
+  while (!matches.empty()) {
+    const std::string* next = matches.front();
+    matches.pop();
+    // If the next match is better, update the best match
+    if (is_better_match(*next, *best_match)) {
+      best_match = next;
+    }
+  }
+  return *best_match;
 }
 
 /* #### Please don't remove this line! #### */
