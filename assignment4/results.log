@@ -1,0 +1,114 @@
+# ls "examples/" | %{echo "`n# $($_.Name)"; cat $_ | ./main --stdin} >> results.log
+
+# (kafka).txt
+[90mLoading dictionary... loaded 464810 unique words.
+Tokenizing input... got 121 tokens.[0m[0m
+
+﻿Someone must have slandered Josef K., for one morning, without having 
+done anything wrong, he was arrested.
+
+The cook, who always [31m<<broght>>[0m[0m him his breakfast at eight o’clock, did 
+not come this time. That had never happened before. For a moment he 
+lay still, looking at the pillow and the old woman who lived opposite
+and who was watching him with an inquisitiveness quite unusual for 
+her. Then, with [31m<<astonshment>>[0m[0m, he noticed that a man he had never seen
+before was in his room. He was wearing a tight black suit which, 
+with its various [31m<<trimings>>[0m[0m, looked like a travelling outfit that had
+gone out of fashion years ago.
+
+“What do you want?” asked K., raising himself half up in bed.
+
+
+[31mbroght[0m[0m: {bright, brocht, brogh, brought}
+[31mastonshment[0m[0m: {astonishment}
+[31mtrimings[0m[0m: {primings, timings, trimmings}
+
+# (marquez).txt
+[90mLoading dictionary... loaded 464810 unique words.
+Tokenizing input... got 84 tokens.[0m[0m
+
+﻿Many years later, as he faced the firing squad, Colonel [31m<<Aureliano>>[0m[0m Buendía
+was to remember that distant afternoon when his father took him to discover ice.
+
+At that time Macondo was a [31m<<vilage>>[0m[0m of twenty adobe houses, built on the bank
+of a river of clear water that ran along a bed of [31m<<pollished>>[0m[0m stones, which were
+white and enormous, like prehistoric eggs. The world was so recent that many
+things lacked names, and in order to indicate them it was [31m<<necesary>>[0m[0m to point.
+
+
+[31mAureliano[0m[0m: {aurelian}
+[31mvilage[0m[0m: {milage, pilage, silage, viage, village, vinage, visage, volage}
+[31mpollished[0m[0m: {polished}
+[31mnecesary[0m[0m: {necessary}
+
+# (morrison).txt
+[90mLoading dictionary... loaded 464810 unique words.
+Tokenizing input... got 128 tokens.[0m[0m
+
+﻿124 WAS SPITEFUL. Full of a [31m<<baby's>>[0m[0m venom. The women in the house knew 
+it and so did the children. For years each put up with the spite in his 
+own way, but by 1873 [31m<<Sethe>>[0m[0m and her daughter Denver were its only victims.
+The grandmother, Baby [31m<<Suggs>>[0m[0m, was dead, and the sons, Howard and [31m<<Buglar>>[0m[0m, 
+had run away by the time they were thirteen years old--as soon as merely
+looking in a mirror shattered it (that was the signal for [31m<<Buglar>>[0m[0m); as soon
+as two tiny hand prints appeared in the cake (that was it for Howard). Neither 
+boy waited to see more; another kettleful of chickpeas smoking in a heap on 
+the floor; soda crackers crumbled and strewn in a line next to the door sill.
+
+
+[31mbaby's[0m[0m: {babe's}
+[31mSethe[0m[0m: {bethe, ethe, lethe, rethe, seathe, seethe, setae, seth, sethi, sithe, smethe}
+[31mSuggs[0m[0m: {muggs, sugg, sughs, sugis, vuggs}
+[31mBuglar[0m[0m: {bugler, burglar, juglar}
+[31mBuglar[0m[0m: {bugler, burglar, juglar}
+
+# gibberish.txt
+[90mLoading dictionary... loaded 464810 unique words.
+Tokenizing input... got 22 tokens.[0m[0m
+
+﻿This is a bunch of gibberish:
+
+ansdka nakdlsnakln lnfgklanrf nksladnksal nkglrnkadf nklsadn
+
+These are definitely misspelled, but probably don't have any suggestions.
+
+
+[92mYou spell so well, even Scrabble pieces arrange themselves for you.[0m[0m
+
+# melville.txt
+[90mLoading dictionary... loaded 464810 unique words.
+Tokenizing input... got 56 tokens.[0m[0m
+
+﻿Call me Ishmael. Some years ago—never mind how long precisely—having little 
+or no money in my purse, and nothing particular to interest me on shore, 
+I thought I would sail about a little and see the watery part of the world. 
+It is a way I have of driving off the spleen and regulating the circulation.
+
+
+[92mYou spell so well, even Scrabble pieces arrange themselves for you.[0m[0m
+
+# orwell.txt
+[90mLoading dictionary... loaded 464810 unique words.
+Tokenizing input... got 55 tokens.[0m[0m
+
+﻿It was a bright cold day in April, and the clocks were striking thirteen. 
+Winston Smith, his chin nuzzled into his breast in an effort to escape the vile wind, 
+slipped quickly through the glass doors of Victory Mansions, though not quickly 
+enough to prevent a swirl of gritty dust from entering along with him.
+
+
+[92mThe spelling bee champions fear you. Rightfully so.[0m[0m
+
+# tolstoy.txt
+[90mLoading dictionary... loaded 464810 unique words.
+Tokenizing input... got 66 tokens.[0m[0m
+
+﻿All happy families are alike; each unhappy family is unhappy in its own way.
+
+Everything was in confusion in the Oblonskys' house. The wife had discovered 
+that the husband was carrying on an intrigue with a French girl who had been
+a governess in their family, and she had announced to her husband that she
+could not go on living in the same house with him.
+
+
+[92mYou spell so well, even Scrabble pieces arrange themselves for you.[0m[0m

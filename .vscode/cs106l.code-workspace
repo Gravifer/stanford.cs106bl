@@ -130,7 +130,9 @@
 			"xstring": "cpp",
 			"xtr1common": "cpp",
 			"xtree": "cpp",
-			"xutility": "cpp"
+			"xutility": "cpp",
+			"numbers": "cpp",
+			"memory_resource": "cpp"
 		},
 		"better-comments.tags": [
 			{
@@ -236,6 +238,8 @@
 		"c-cpp-flylint.standard": [
 			"c23",
 			"c++23"
-		]
+		],
+		"C_Cpp.default.cppStandard": "c++26",
+		"C_Cpp.default.cStandard": "c23"
 	}
 }

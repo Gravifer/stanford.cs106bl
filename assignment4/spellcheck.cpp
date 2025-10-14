@@ -39,15 +39,21 @@ std::set<Misspelling> spellcheck(const Corpus& source, const Dictionary& diction
   namespace rv = std::ranges::views;
   auto view = source
     | rv::filter([&dictionary](const Token& t) { return
-        !dictionary.contains(t.content); } )
+        !dictionary.contains(t.content);
+      })
     | rv::transform([&dictionary](const Token& t) {
         auto view = dictionary
-          | rv::filter([&t](const std::string& word) {
-              return levenshtein(t.content, word) <= 1; });
+          | rv::filter([&t](const std::string& word) { return
+              levenshtein(t.content, word) <= 1;
+            });
         std::set<std::string> suggestions(view.begin(), view.end());
         return Misspelling {t, suggestions};
-      } );
-  std::set<Misspelling> misspellings;
+      })
+    | rv::filter([](const Misspelling& m) { return
+        !m.suggestions.empty();
+      });
+    // | std::ranges::to<std::set<Misspelling>>(); // C++23
+  std::set<Misspelling> misspellings(view.begin(), view.end());
   return misspellings;
 };
 
