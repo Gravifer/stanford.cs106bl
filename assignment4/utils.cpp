@@ -1,3 +1,9 @@
+#ifndef SPELLCHECK_H_INCLUDED // Include headers only for IntelliSense when not included by spellcheck.cpp
+#include "spellcheck.h"
+#include <numeric>
+#include <vector>
+#endif
+
 #include <algorithm>
 #include <string>
 #include <tuple>

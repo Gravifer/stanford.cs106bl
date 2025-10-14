@@ -227,7 +227,9 @@
 		],
 		"files.readonlyInclude": {
 			"courses.csv": true,
-			"short_answer.txt": true
+			"short_answer.txt": true,
+			"words.txt": true,
+			"examples/*": true
 		},
 		"read-only.non-workspaceFiles.enable": true,
 		"read-only.non-workspaceFiles.statusBarButton": true,

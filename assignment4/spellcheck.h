@@ -1,4 +1,5 @@
 #pragma once
+#define SPELLCHECK_H_INCLUDED
 
 #include <set>
 #include <string>
