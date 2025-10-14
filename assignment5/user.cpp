@@ -63,3 +63,18 @@ void User::set_friend(size_t index, const std::string& name)
  * STUDENT TODO:
  * The definitions for your custom operators and special member functions will go here!
  */
+
+/** Overloaded output stream operator for User
+ * @example std::cout << user; // User(name=Alice, friends=[Bob, Charlie])
+ */
+std::ostream& operator<<(std::ostream& os, const User& user) {
+  os << "User(name=" << user._name << ", friends=[";
+  for (size_t i = 0; i < user._size; ++i) {
+    os << user._friends[i];
+    if (i < user._size - 1) {
+      os << ", ";
+    }
+  }
+  os << "])";
+  return os;
+}
