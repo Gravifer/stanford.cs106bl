@@ -21,13 +21,14 @@ Corpus tokenize(std::string& source) { // * see <https://en.cppreference.com/w/c
   //   tokenStart = space + 1;
   // }
   // tokens.emplace(source, tokenStart, source.end());
-  auto _ = std::transform(
-    spaces.begin(), spaces.end(), spaces.begin() + 1,
+  /* auto _ = */ std::transform(
+    spaces.begin(), spaces.end() - 1, spaces.begin() + 1,
     std::inserter(tokens, tokens.end()),
     [&source](auto space, auto nextSpace) {
       return Token{source, space + 1, nextSpace};
     }
   );
+  /* auto _ = */ std::erase_if(tokens, [](const Token& t){ return t.content.empty(); });
   return tokens;
 }
 
