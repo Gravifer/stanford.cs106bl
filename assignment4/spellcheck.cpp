@@ -33,8 +33,22 @@ Corpus tokenize(std::string& source) { // * see <https://en.cppreference.com/w/c
 }
 
 std::set<Misspelling> spellcheck(const Corpus& source, const Dictionary& dictionary) {
-  /* TODO: Implement this method */
-  return std::set<Misspelling>();
+  if (dictionary.empty() || source.empty()) {
+    return {};
+  }
+  namespace rv = std::ranges::views;
+  auto view = source
+    | rv::filter([&dictionary](const Token& t) { return
+        !dictionary.contains(t.content); } )
+    | rv::transform([&dictionary](const Token& t) {
+        auto view = dictionary
+          | rv::filter([&t](const std::string& word) {
+              return levenshtein(t.content, word) <= 1; });
+        std::set<std::string> suggestions(view.begin(), view.end());
+        return Misspelling {t, suggestions};
+      } );
+  std::set<Misspelling> misspellings;
+  return misspellings;
 };
 
 /* Helper methods */
