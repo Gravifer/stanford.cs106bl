@@ -82,34 +82,34 @@ User::User(const User& other)
 User& User::operator=(const User& other) {
   if (this != &other) { //* notice how much shorter copy-and-swap is!
     // User(other).swap(*this); //* see <https://en.wikibooks.org/wiki/More_C++_Idioms/Copy-and-swap>
-    { // Create new resources BEFORE modifying state
-      std::string new_name = other._name; //! Rarely throws
-      std::string* new_friends = _friends; // Keep existing allocation if possible
-      size_t new_capacity = _capacity;
-      
-      if (_capacity < other._capacity) { //* then 0 < other._capacity
-        new_friends = new std::string[other._capacity]; //! May throw
-        new_capacity = other._capacity;
+    { //! Exception safety: basic guarantee only (not strong)
+      // Attempt to create new resources BEFORE modifying state (where possible)
+      bool grow = _capacity < other._capacity;
+      std::string temp_name = other._name; //! Rarely throws
+      size_t temp_capacity = grow ? other._capacity : _capacity;
+      std::unique_ptr<std::string[]> temp_friends; // Keep existing allocation if possible
+      if (grow) { //* then 0 < other._capacity
+        temp_friends = std::make_unique<std::string[]>(temp_capacity); //! May throw
+      } else { // if the `copy()` below throws in this branch, *this is tempered
+        temp_friends.reset(_friends); // Take ownership of existing array
+        _friends = nullptr;              // Prevent double delete
       }
-      
       // Copy friends data if needed
-      if (other._friends && new_friends) {
+      if (other._friends && temp_friends) {
         std::copy(other._friends, other._friends + other._size, 
-          new_friends); //! May throw
+          temp_friends.get()); //! May throw - non-grow case: object left inconsistent
       } else if (!other._friends) {
-        // Handle case where other has no friends - we should also have none
-        new_friends = nullptr;
-        new_capacity = 0;
+        temp_friends.reset();
+        temp_capacity = 0;
       }
       
-      // Only modify state after all allocations succeed
-      _name = std::move(new_name);
-      if (new_friends != _friends) {
-        delete[] _friends;
-        _friends = new_friends;
-        _capacity = new_capacity;
+      // Commit state changes (some already done above in !grow case)
+      _name = std::move(temp_name);      // Commit name change
+      if (grow) {
+        _capacity = temp_capacity;       // Update capacity for growth case
       }
-      _size = other._size;
+      _friends = temp_friends.release(); // Restore ownership of array
+      _size = other._size;               // Update size
     }
   }
   return *this;
