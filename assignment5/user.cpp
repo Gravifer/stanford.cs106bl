@@ -126,6 +126,28 @@ inline void swap(User& first, User& second) noexcept {
   first.swap(second);
 }
 
+/**
+ * Custom comparison operator to compare Users by name.
+ * @param other The other User to compare to.
+ * @return `true` if this User's name is alphabetically less
+ *    than the other User's name; `false` otherwise.
+ */
+bool User::operator<(const User& other) const {
+  return _name < other._name;
+}
+
+/**
+ * Custom compound assignment operator to befriend another User.
+ * Adds the other User and this User to each-other's friends list.
+ */
+User& User::operator+=(User& other) {
+  if (this != &other) { // no self-befriending
+    this->add_friend(other._name);
+    other.add_friend(this->_name);
+  }
+  return *this;
+}
+
 /** Overloaded output stream operator for User
  * @example std::cout << user; // User(name=Alice, friends=[Bob, Charlie])
  */

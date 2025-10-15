@@ -35,10 +35,13 @@ public:
   User(User&& other) noexcept = delete; // no move constructor
   User& operator=(const User& other); // copy assignment
   User& operator=(User&& other) noexcept = delete; // no move assignment
-  User& operator+=(const User& other); // compound assignment
-  friend std::ostream& operator<<(std::ostream& os, const User& user);
+
   void swap(User& other) noexcept; // swap function
   friend inline void swap(User& first, User& second) noexcept;
+
+  bool operator< (const User& other) const; // custom: comparison by name
+  User& operator+=(User& other); // custom: befriending
+  friend std::ostream& operator<<(std::ostream& os, const User& user);
 
 private:
   std::string _name;
