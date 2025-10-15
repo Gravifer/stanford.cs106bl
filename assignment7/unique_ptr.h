@@ -108,6 +108,25 @@ public:
    * - Implement the move constructor
    * - Implement the move assignment operator
    */
+  ~unique_ptr() noexcept {
+    delete _ptr;
+    _ptr = nullptr;
+  }
+  // copy
+  unique_ptr(const unique_ptr& other) = delete;
+  unique_ptr& operator=(const unique_ptr& other) = delete;
+  // move
+  unique_ptr(unique_ptr&& other) noexcept : _ptr(other._ptr) {
+    other._ptr = nullptr;
+  }
+  unique_ptr& operator=(unique_ptr&& other) noexcept {
+    if (this != &other) {
+      delete _ptr;
+      _ptr = other._ptr;
+      other._ptr = nullptr;
+    }
+    return *this;
+  }
 };
 
 /**
